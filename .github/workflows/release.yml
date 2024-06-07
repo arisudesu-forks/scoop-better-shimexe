@@ -27,6 +27,13 @@ jobs:
             ninja
       - uses: actions/checkout@v2
 
+      - name: Workaround C++ clang
+        run: |
+          clang --version
+          choco upgrade llvm
+          # $env:PATH = ($env:PATH -split ';' | Where-Object { $_ -ne 'C:\Program Files\LLVM\bin' }) -join ';'
+          clang --version
+      
       - name: Get latest release
         continue-on-error: true
         id: cur_release
